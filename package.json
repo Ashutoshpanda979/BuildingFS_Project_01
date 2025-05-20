@@ -1,0 +1,19 @@
+{
+  "name": "building-fs-project_01",
+  "version": "1.0.0",
+  "description": "a node project for authentication",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ashutoshpanda979/BuildingFS_Project_01.git"
+  },
+  "author": "ashutoshpanda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ashutoshpanda979/BuildingFS_Project_01/issues"
+  },
+  "homepage": "https://github.com/Ashutoshpanda979/BuildingFS_Project_01#readme"
+}
