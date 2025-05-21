@@ -4,7 +4,7 @@
   "description": "a node project for authentication",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,15 @@
   "bugs": {
     "url": "https://github.com/Ashutoshpanda979/BuildingFS_Project_01/issues"
   },
-  "homepage": "https://github.com/Ashutoshpanda979/BuildingFS_Project_01#readme"
+  "homepage": "https://github.com/Ashutoshpanda979/BuildingFS_Project_01#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }
