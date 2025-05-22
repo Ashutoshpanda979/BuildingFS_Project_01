@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
         type: Date
     }
 }, {
-    Timestamp: true,
+    timestamps: true,
 })
 
 

@@ -3,11 +3,8 @@ import express from "express" //importing express from the express node module
 import dotenv from "dotenv" // importing all the .env variables.
 import cors from "cors" // importing cors - Cross Origin Resources
 import db from "./utils/db.js" // importing database file from Utils 
-
-
 // import all routes
-import userRoutes from './routes.user.routes.js'
-
+import userRoutes from './routes/user.routes.js'
 
 dotenv.config()
 
