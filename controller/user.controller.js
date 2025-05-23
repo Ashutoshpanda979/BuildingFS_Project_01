@@ -12,9 +12,9 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 
 const registerUser = async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({ message: "Request body is missing" });
-  }
+  // if (!req.body) {
+  //   return res.status(400).json({ message: "Request body is missing" });
+  // }
 
   const { name, email, password } = req.body;
 
@@ -81,7 +81,7 @@ const registerUser = async (req, res) => {
   } catch (error) {
     res.status(400).json({
         message: "User not registered",
-        error,
+        error: error.message,
         success: false,
     })
   }
@@ -89,18 +89,33 @@ const registerUser = async (req, res) => {
 };
 
 const verifyUser = async (req, res) => {
-    //get token from url
-    // validate token
     // find user based on token
     // if found user.isVerified = true,
     // remove verification token
     // save
     // return response
 
-    const {token} = req.params
+    //get token from url
+   
+    const {token} = req.params;
+    console.log(token);
+    if(!token){
+      res.status(400).json({
+        message: "Invalid token"
+      })
+    }
+    // validate token
+    const user = await User.findOne({verificationToken: token})
+    if(!user){
+      res.status(400).json({
+        message: "Invalid User",
+      })
+    }
 
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    await user.save()
 
-
-}
+};
 
 export { registerUser, verifyUser };
