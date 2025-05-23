@@ -10,7 +10,10 @@
 import User from "../model/User.model.js";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
+// registering user
 const registerUser = async (req, res) => {
   // if (!req.body) {
   //   return res.status(400).json({ message: "Request body is missing" });
@@ -88,6 +91,7 @@ const registerUser = async (req, res) => {
 
 };
 
+// verifying user
 const verifyUser = async (req, res) => {
     // find user based on token
     // if found user.isVerified = true,
@@ -118,4 +122,85 @@ const verifyUser = async (req, res) => {
 
 };
 
-export { registerUser, verifyUser };
+// Loging In
+const login = async (req, res) => {
+  const{email,password} = req.body;
+
+  if(!email || !password){
+   return res.status(400).json({
+    message: "All fields are required"
+   })
+  }
+
+  
+  try{
+    const user = await User.findOne({email})
+    if(!user){
+      return res.status(400).json({
+        message: "User not found"
+      })
+    }
+
+    
+    const isMatch = await bcrypt.compare(password, user.password)
+    
+    console.log(isMatch);
+    if(!isMatch){
+      return res.status(400).json({
+        message: "User not found"
+      })
+    }
+    
+    // if psd is matched but user in not verified.
+    if(isMatch){
+      return res.status(400).json({
+        message: "User not verified. Please Verify your email."
+      })
+    }
+
+    const token = jwt.sign({id: user._id, role:user.role},
+      "shhhhh",
+      {
+        expiresIn: '24h'
+      }
+    );
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      maxAge: 24*60*60*1000
+    }
+
+    // abhi ke liye cookies use karein token store karne keliye
+    res.cookie("token", token, cookieOptions);
+    res.status(200).json({
+      success: true,
+      message: "Login Successful",
+      token,
+      user:{
+        id: user._id,
+        name: user.name,
+        role: user.role
+      }
+    })
+
+
+  } catch (error) {
+    res.status(400).json({
+        message: "User not registered",
+        error: error.message,
+        success: false,
+    })
+  }
+
+
+}
+
+
+export { registerUser, verifyUser, login };
+
+
+// user_profile
+// logout
+// forgot password
+// 

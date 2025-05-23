@@ -5,6 +5,7 @@ import cors from "cors" // importing cors - Cross Origin Resources
 import db from "./utils/db.js" // importing database file from Utils 
 // import all routes
 import userRoutes from './routes/user.routes.js'
+import cookieParser from "cookie-parser"
 
 dotenv.config()
 
@@ -20,8 +21,8 @@ app.use(
 );
 
 app.use(express.json());
-
 app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
 
 const port = process.env.port || 4000; 
 // its a variable port - and we've added 3000
